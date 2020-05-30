@@ -6,6 +6,11 @@ make -C libopencm3
 make -C <project name>
 ```
 
+`make all`, `make clean`, `make flash`, and `make debug` rules are available.
+
+GDB/OpenOCD scripts are set up to use a JLINK EDU programmer. Adapt the scripts
+as necessary for other interfaces.
+
 ## License:
 Unless otherwise noted, examples are MIT-licensed.
 
