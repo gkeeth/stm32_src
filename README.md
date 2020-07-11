@@ -13,6 +13,7 @@ as necessary for other interfaces.
 
 ## License:
 Unless otherwise noted, examples are MIT-licensed.
+
 8x8 Bitmap font (`font8x8_basic.h`) is public domain and obtained from:
 github.com/dhepper/font8x8
 
