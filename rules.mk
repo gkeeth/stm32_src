@@ -107,7 +107,7 @@ LDLIBS += -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 %: s.%
 %: SCCS/s.%
 
-all: $(PROJECT).elf $(PROJECT).bin
+all: $(PROJECT).elf $(PROJECT).bin $(PROJECT).lss
 flash: $(PROJECT).flash
 
 # error if not using linker script generator
@@ -146,7 +146,8 @@ $(PROJECT).elf: $(OBJS) $(LDSCRIPT) $(LIBDEPS)
 	$(Q)$(OBJCOPY) -O binary  $< $@
 
 %.lss: %.elf
-	$(OBJDUMP) -h -S $< > $@
+	@printf "  OBJDUMP -h -S\t$@\n"
+	$(Q)$(OBJDUMP) -h -S $< > $@
 
 %.list: %.elf
 	$(OBJDUMP) -S $< > $@
