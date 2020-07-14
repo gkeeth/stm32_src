@@ -141,7 +141,6 @@ void ssd1306_write_command(const uint8_t command) {
 
 /* write a list of commands to the display */
 void ssd1306_write_command_list(uint8_t *command_list, uint32_t len) {
-    /* TODO: test */
     uint8_t control = CONTROL_BYTE_COMMAND;
     i2c_write_with_header(DISP_I2C, DISP_ADDR, &control, sizeof(control),
             command_list, len);
