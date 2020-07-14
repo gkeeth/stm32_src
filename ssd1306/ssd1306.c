@@ -92,7 +92,6 @@ bool ssd1306_update_display(void) {
     };
     uint8_t control = CONTROL_BYTE_DATA;
 
-    /* i2c_transfer7(DISP_I2C, DISP_ADDR, header, sizeof(header), 0, 0); */
     ssd1306_write_command_list(header, sizeof(header));
     /* need to wait for header transaction to finish before writing the
      * framebuffer, because the framebuffer transaction sets RELOAD which will
