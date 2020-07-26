@@ -2,14 +2,22 @@
 #define _SSD1306_H_
 
 /*
- * Driver for SSD1306 OLED display (I2C)
+ * Driver for SSD1306 OLED display (I2C/SPI)
+ *
+ * I2C interface enabled by defining SSD1306_I2C in makefile
+ * SPI interface enabled by defining SSD1306_SPI in makefile
+ * interfaces are mutually exclusive
  *
  * TODO: implement the following controller features:
  * - scrolling
  */
 
+#ifdef SSD1306_I2C
 #define DISP_I2C I2C1
 #define DISP_ADDR 0x3C
+#elif defined(SSD1306_SPI)
+#define DISP_SPI SPI1
+#endif
 
 #define DISP_WIDTH 128
 #define DISP_HEIGHT 64
@@ -38,11 +46,36 @@ bool ssd1306_update_display(void);
 void ssd1306_update_display_slow(void);
 
 /* write a single command to display */
-void ssd1306_write_command(const uint8_t command);
+void ssd1306_write_command(uint8_t command);
 
 /* write a list of commands to the display */
 void ssd1306_write_command_list(uint8_t *command_list, uint32_t len);
 
+#ifdef SSD1306_SPI
+/* set DC (data/command) pin to data mode */
+void ssd1306_set_data(void);
+
+/* set DC (data/command) pin to command mode */
+void ssd1306_set_command(void);
+
+/* deassert reset pin */
+void ssd1306_deassert_reset(void);
+
+/* assert reset pin */
+void ssd1306_assert_reset(void);
+
+/*
+ * write a command buffer via SPI
+ *
+ * handles asserting/deasserting CS and setting DC appropriately
+ *
+ * w: pointer to buffer of commands
+ * wn: number of commands (number of bytes in buffer)
+ */
+void ssd1306_spi_write_commands(uint8_t *w, size_t wn);
+
+void ssd1306_spi_write_data(uint8_t *w, size_t wn);
+#endif /* SSD1306_SPI */
 
 /*
  * control bytes for commands/data

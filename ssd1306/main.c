@@ -2,7 +2,13 @@
 #include <libopencm3/stm32/i2c.h>
 
 #include "systick.h"
+
+#ifdef SSD1306_I2C
 #include "i2c.h"
+#elif defined SSD1306_SPI
+#include "spi.h"
+#endif
+
 #include "ssd1306.h"
 #include "ssd1306_graphics.h"
 
@@ -12,7 +18,11 @@ static void setup(void) {
     rcc_clock_setup_in_hse_8mhz_out_48mhz();
 
     systick_setup();
+#ifdef SSD1306_I2C
     i2c_setup();
+#elif defined(SSD1306_SPI)
+    spi_setup();
+#endif
 }
 
 int main(void) {
@@ -78,4 +88,3 @@ int main(void) {
     draw_textbox("three\nlines\nnow!", 16, 2, 30, 46, 62, PIXEL_ON, PIXEL_OFF);
     ssd1306_update_display();
 }
-
