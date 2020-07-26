@@ -19,7 +19,7 @@ uint32_t millis(void) {
 /* delay (blocking) for ms milliseconds */
 void delay(uint32_t ms) {
     uint32_t t0 = millis();
-    while (millis() - ms < t0);
+    while (millis() < t0 + ms);
 }
 
 /* setup systick to fire every 1 ms */
